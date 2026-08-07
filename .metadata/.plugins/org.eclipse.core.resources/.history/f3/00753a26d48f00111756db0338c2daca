@@ -1,0 +1,27 @@
+package com.kh.spring.test;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+@RequestMapping("/test")
+public class ResponseTestController {
+
+	/*
+	 * @ResponseBody : 화면없이 결과를 바로 텍스트로 응답.
+	 * 
+	 */
+	@ResponseBody
+	@GetMapping
+	public String responseBodyTest() {
+		return "결과를 텍스트로 응답";
+	}
+	
+	@GetMapping("/index")
+	public String responseIndex() {
+		
+		return "";
+	}
+}

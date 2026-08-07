@@ -1,0 +1,62 @@
+package com.kh.spring.member;
+
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/member")
+public class MemberController {
+	private final MemberService service;
+	public MemberController(MemberService service) {
+		this.service = service;
+	}
+	/**
+	* 회원 목록 조회
+	* URL : [GET] /member/list
+	*/
+
+	/**
+	* 회원 등록
+	* URL : [POST] /member/insert
+	* Parameter : age (나이), email (이메일), name (이름) => MemberDTO로 한번에 받을 수 있음
+	*/
+
+	/**
+	* 회원 삭제
+	* URL : [GET] /member/delete/fid}
+	*/
+	
+	@GetMapping("/list")
+	public String memberList(Model model) {
+		List<MemberDTO> list = service.getMemberList();
+		model.addAttribute("memberList", list.toArray());
+		
+		return "member/list";
+	}
+	@PostMapping("/insert")
+	public String memberInsert(@ModelAttribute MemberDTO dto) {
+		service.memberInsert(dto);
+		return "redirect:/member/list";
+	}
+	
+	@GetMapping("/delete/{id}")
+	public String memberDelete(@PathVariable int id, Model model) {
+		service.memberDelete(id);
+		System.out.println("삭제되었습니다.");
+		return "redirect:/member/list";
+	}
+	
+	@GetMapping("/update/{name}")
+	public String memberUpadte(MemberDTO member) {
+		
+		return "";
+	}
+	
+}

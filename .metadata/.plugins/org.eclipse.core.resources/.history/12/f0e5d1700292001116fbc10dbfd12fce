@@ -1,0 +1,5 @@
+package com.kh.mybatis.model.mapper;
+
+public interface MemberMapper {
+
+}

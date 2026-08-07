@@ -1,0 +1,5 @@
+package com.kh.spring.util;
+
+public class DBUtil {
+
+}

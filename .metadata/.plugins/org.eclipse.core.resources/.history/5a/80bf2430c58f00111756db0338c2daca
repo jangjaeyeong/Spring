@@ -1,0 +1,13 @@
+package com.kh.spring.member;
+
+import jakarta.annotation.Generated;
+import lombok.Setter;
+
+@Setter
+public class MemberDTO {
+	private Long id;
+	private String name;
+	private String email;
+	private int age;
+	
+}
