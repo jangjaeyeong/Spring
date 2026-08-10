@@ -41,7 +41,11 @@ public class MemberController {
 		if (result > 0) {
 			session.setAttribute("message", "회원가입 성공!");
 		}else {
+<<<<<<< HEAD
 			session.setAttribute("message", "회원가입 시빠이!");
+=======
+			session.setAttribute("message", "회원가입 시파이!");
+>>>>>>> 8973f8bd9dd5d1bec1ae92cd5a4c4cd20eec93f2
 		}
 		return "redirect:/member/list";
 	}

@@ -1,0 +1,58 @@
+package com.kh.spring.member;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
+import com.kh.spring.util.DBUtil;
+
+@Repository
+public class MemberDAO {
+	public List<MemberDTO> findAll() {
+		List<MemberDTO> list = new ArrayList<>();
+		
+		String sql = "select id, name, email, age from member";
+		
+		try(Connection conn = DBUtil.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();
+				) {
+			
+			while(rs.next()) {
+				MemberDTO m = new MemberDTO(rs.getInt("id"),
+											rs.getString("name"),
+											rs.getString("email"),
+											rs.getInt("age"));
+				list.add(m);
+			}
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public void insert(MemberDTO member) {
+		
+		String sql = "insert into member values(seq_member_id.nextval, ?, ?, ?)";
+		try(Connection conn = DBUtil.getConnection()) {
+			
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void delete(int id) {
+		
+	}
+
+}
+
+

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBatis</title>
+</head>
+<body>
+    <h1>MyBatis Practice</h1>
+
+    <!--
+        현재 파일은 WEB-INF 폴더 밖에 추가함
+        => 브라우저에서 URL로 직접 접근이 가능!
+    -->
+    <h3><a href="/member/list">회원 목록</a></h3>
+	<h3><a href="/member/insertForm">회원 목록</a></h3>
+</body>
+</html>
