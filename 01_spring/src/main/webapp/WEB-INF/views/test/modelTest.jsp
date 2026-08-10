@@ -1,0 +1,15 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<meta charset="UTF-8">
+		<title>ModelTest 파일</title>
+		<body>
+			
+			<h1>결과 화면</h1>
+			<p> ${message}</p>
+			
+		</body>
+	</head>
+</html>
