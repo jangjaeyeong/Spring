@@ -1,9 +1,7 @@
 package com.kh.mybatis.model.mapper;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
-
 import com.kh.mybatis.model.dto.MemberDTO;
 
 		//@Mapper : 이 인터페이스는 MyBatis의 Mapper로써 스프링이 어플리케이션 시작 시 
@@ -13,5 +11,5 @@ public interface MemberMapper {
 
 	List<MemberDTO> findAll();
 	
-	int insert(MemberDTO member);  //=> null 와이?
+	int insert(MemberDTO member);
 }

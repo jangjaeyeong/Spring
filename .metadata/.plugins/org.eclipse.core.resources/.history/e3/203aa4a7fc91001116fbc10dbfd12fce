@@ -1,5 +1,0 @@
-package com.kh.mybatis.model.dto;
-
-public class MemberDTO {
-
-}

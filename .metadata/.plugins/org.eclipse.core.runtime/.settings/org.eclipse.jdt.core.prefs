@@ -2,5 +2,5 @@ eclipse.preferences.version=1
 org.eclipse.jdt.core.classpathVariable.JRE_LIB=C\:/dev/jdk-17.0.19/lib/jrt-fs.jar
 org.eclipse.jdt.core.classpathVariable.JRE_SRC=C\:/dev/jdk-17.0.19/lib/src.zip
 org.eclipse.jdt.core.classpathVariable.JRE_SRCROOT=
-org.eclipse.jdt.core.classpathVariable.M2_REPO=C\:/dev/apache-maven-3.9.16/repository
+org.eclipse.jdt.core.classpathVariable.M2_REPO=C\:/Users/user/.m2/repository
 org.eclipse.jdt.core.codeComplete.visibilityCheck=enabled

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!--
+	namespace : 해당 XML 파일이 어떤 Mapper 인터페이스와 연결할 지 지정
+  -->
+<mapper namespace="com.kh.project.model.mapper.ParkingMapper">
+  <!-- 
+		id : 연결된 인터페이스에 실행될 메소드명
+		resultType : 쿼리문의 결과를 매핑할 타입 지정.
+						클래스(DTO/VO)인 경우 전체 클래스명으로 작성해야 함
+					*클래스명만 지정하고자 할 경우, 설정 추가 (=> application.properties)
+  -->
+  
+  <select id="getList" resultType="ListDTO">
+  select v.car_number as carNumber,to_char(p.enter_time, 'YYYY"년" MM"월" DD"일" HH24"시"MI"분"') as enterTime
+   from vehicle v, parking_record p
+   	where v.car_number = p.car_number and p.exit_time is null
+  </select>
+  
+  <select id="history" resultType="ListDTO">
+  select car_number as carNumber,to_char(enter_time, 'YYYY"년" MM"월" DD"일" HH24"시"MI"분"') as enterTime, to_char(exit_time, 'YYYY"년" MM"월" DD"일" HH24"시"MI"분"') as exitTime
+   from parking_record where exit_time is not null
+  </select>
+  
+  <select id="getMemberList" resultType="MemberDTO">
+  select id, car_number carNumber, to_char(expire_date, 'YYYY"년" MM"월" DD"일"') expireDate, REGEXP_REPLACE(phone_number, '([0-9]{3})([0-9]{3,4})([0-9]{4})', '\1-\2-\3') cellphone, name 
+  	from member
+  </select>
+  
+  <delete id="delMember" parameterType="int">
+  	delete from member where id = #{id}
+  </delete>
+  
+  <insert id="insMember" parameterType="InsertMemberDTO">
+  	insert into member (car_number, expire_date, phone_number, name) values (#{carNumber}, systimestamp + interval '1' month, #{cellphone}, #{name})
+  </insert>
+  
+  <update id="modifyMember" parameterType="MemberDTO">
+  	update member set car_number = #{carNumber}, name = #{name}, phone_number = #{cellphone} where id = #{id}
+  </update>
+  
+  <select id="findBy" resultType="MemberDTO" parameterType="int">
+  	select id, car_number as carNumber, phone_number as cellphone, name from member where id = #{id} 
+  </select>
+  
+  
+  <!-- 입차 쿼리문 -->
+  <select id="memberCheck" parameterType="String" resultType="Integer">
+  	select car_number from member where car_number = #{carNumber}
+  </select>
+  
+  <insert id="insVehicle" parameterType="String">
+  	insert into vehicle(car_number, status) VALUES (#{carNumber}, 1)
+  </insert>
+  	
+  <insert id="insRecord" parameterType="String">
+  insert into parking_record (car_number, enter_time, fee) VALUES (#{carNumber}, systimestamp,0)
+  </insert>
+  
+  <!-- 출차 쿼리문 -->
+  <select id="exitEnterTime" parameterType="String" resultType="java.time.LocalDateTime">
+  select enter_time from parking_record where car_number = #{carNumber}
+  </select>
+  
+  <update id="updateExitTime" parameterType="ExitDTO">
+  	update parking_record
+  	 set exit_time = systimestamp + interval '2' hour,
+  	  fee = #{fee} where car_number = #{carNumber}
+  </update>
+  <delete id="delVehicle" parameterType="String">
+  	delete from vehicle where car_number = #{carNumber}
+  </delete>
+</mapper>

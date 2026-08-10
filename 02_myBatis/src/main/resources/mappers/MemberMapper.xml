@@ -22,4 +22,5 @@
     <insert id="insert" parameterType="MemberDTO">
   	insert into member(id, name, email, age) values(seq_member_id.nextval, #{name}, #{email}, #{age})
   </insert>
+  
 </mapper>
