@@ -47,7 +47,7 @@
   
   
   <!-- 입차 쿼리문 -->
-  <select id="memberCheck" parameterType="String" resultType="Integer">
+  <select id="memberCheck" parameterType="String" resultType="String">
   	select car_number from member where car_number = #{carNumber}
   </select>
   
@@ -61,13 +61,13 @@
   
   <!-- 출차 쿼리문 -->
   <select id="exitEnterTime" parameterType="String" resultType="java.time.LocalDateTime">
-  select enter_time from parking_record where car_number = #{carNumber}
+  select enter_time from parking_record where car_number = #{carNumber} and exit_time is null
   </select>
   
   <update id="updateExitTime" parameterType="ExitDTO">
   	update parking_record
   	 set exit_time = systimestamp + interval '2' hour,
-  	  fee = #{fee} where car_number = #{carNumber}
+  	  fee = #{fee} where car_number = #{carNumber} and exit_time is null
   </update>
   <delete id="delVehicle" parameterType="String">
   	delete from vehicle where car_number = #{carNumber}

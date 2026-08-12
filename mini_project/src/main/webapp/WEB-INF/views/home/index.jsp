@@ -24,7 +24,7 @@
 	<a href="/parking/insertParking.html">입차</a> <br>
 	<a href="/parking/exitParking.html">출차</a> <br>
 	<a href="/parking-list">주차 현황</a> <br>
-	<a href="/parking-history">입출차 히스토리</a> <br>
+	<a href="/parking-history">입출차 기록</a> <br>
 	<a href="/member-list">회원 목록</a> <br>
 </body>
 </html>

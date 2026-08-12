@@ -21,7 +21,7 @@ public interface ParkingMapper {
 	 int insMember(InsertMemberDTO dto);
 	 int modifyMember(MemberDTO dto);
 	 
-	 Integer memberCheck(@Param("carNumber")String carNumber);
+	 String memberCheck(@Param("carNumber")String carNumber);
 	 int insVehicle(@Param("carNumber")String carNumber);
 	 int insRecord(@Param("carNumber")String carNumber);
 	 

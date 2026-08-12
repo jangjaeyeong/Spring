@@ -47,7 +47,14 @@ public class ParkingService {
  	}
  	
  	public String insertMember(InsertMemberDTO dto) {
- 		int result = mapper.insMember(dto);
+ 		int result = 0;
+ 		try {
+ 			result = mapper.insMember(dto);
+ 		}catch(Exception e) {
+ 			e.printStackTrace();
+ 			return "이미 존재하는 차량 번호입니다.";
+ 		}
+ 		
  		
  		if(result == 1) {
  			return "월 회원으로 등록되었습니다.";
@@ -61,7 +68,13 @@ public class ParkingService {
  	}
  	
  	public String updateMember(MemberDTO member) {
- 		int result = mapper.modifyMember(member);
+ 		int result = 0;
+ 		try {
+ 			result = mapper.modifyMember(member);
+ 		}catch(Exception e) {
+ 			return "회원으로 존재하는 차량 번호입니다.";
+ 		}
+ 		
  		
  		if(result == 1) {
  			return "회원 정보가 수정되었습니다.";
@@ -71,20 +84,39 @@ public class ParkingService {
  	}
  	
  	public String exitCar(String carNumber) {
+ 		boolean isTrue = false;
+ 		List<ListDTO> list = mapper.getList();
+ 		for(ListDTO li : list) {
+ 			if(carNumber.equals(li.getCarNumber())) {
+ 				isTrue = true;
+ 				break;
+ 			}else {
+ 				isTrue = false;
+ 			}
+ 		}
+ 		if(isTrue == false) {
+ 			return "출차 처리가 완료된 차량입니다. 관리자에게 문의해주세요";
+ 		}
+ 		
  		LocalDateTime enterTime = mapper.exitEnterTime(carNumber);
  		FeeCalculator feeCal = new FeeCalculator();
  		int fee = 0;
  		int result = 0;
- 		Integer check = mapper.memberCheck(carNumber);
+ 		String check = mapper.memberCheck(carNumber);
  		if(check == null) {
+ 			if(enterTime == null) {
+ 				return "입차 기록이 없습니다.";
+ 			}
  			fee = feeCal.calculatorFee(enterTime);
  		}
  		
  		ExitDTO exitDto = new ExitDTO(fee, carNumber);
- 		mapper.updateExitTime(exitDto);
- 		result++;
- 		mapper.delVehicle(carNumber);
- 		result++;
+ 		
+ 			mapper.updateExitTime(exitDto);
+ 	 		result++;
+ 	 		mapper.delVehicle(carNumber);
+ 	 		result++;
+ 		
  		if(result == 2) {
  			return "안녕히 가십시오. 주차요금: " + fee;
  		}else {
@@ -94,11 +126,24 @@ public class ParkingService {
  	
  	public String insertCar(String carNumber) {
  		int result = 0;
- 		mapper.insVehicle(carNumber);
- 		result++;
- 		mapper.insRecord(carNumber);
- 		result ++;
- 		Integer check = mapper.memberCheck(carNumber);
+ 		String check = null;
+ 		try {
+ 			mapper.insVehicle(carNumber);
+ 	 		result++;
+ 	 		mapper.insRecord(carNumber);
+ 	 		result ++;
+ 		}catch(Exception e) {
+ 			return "입차 처리가 완료된 차량입니다. 관리자에게 문의해주세요";
+ 		}
+ 		try {
+ 			check = mapper.memberCheck(carNumber);
+ 		}catch (Exception e) {
+			// TODO: handle exception
+ 			e.printStackTrace();
+		}
+ 		
+ 		System.out.println("check:: ======= " + check);
+ 		
  		if(result == 2) {
  			if(check != null) {
  				return "(등록차량) 환영합니다.";
@@ -106,7 +151,7 @@ public class ParkingService {
  				return "(방문차량) 환영합니다.";
  			}
  		}else {
- 			return "입차가 불가합니다. 관리자에게 문의해주십시오.";
+ 			return "입차가 불가합니다. 관리자에게 문의해주세요.";
  		}
  	}
  }

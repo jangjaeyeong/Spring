@@ -3,6 +3,8 @@
 	<section name="java.lang.Class">
 		<item key="replaceBarOpen" value="false"/>
 		<list key="findhistory">
+			<item value="memberCheck"/>
+			<item value="insRec"/>
 			<item value="update"/>
 			<item value="&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/style.css&quot;&gt;"/>
 			<item value="ojdbc"/>
